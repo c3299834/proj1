@@ -1,33 +1,25 @@
 #include <stdio.h>
 #include <math.h>
 #include <strings.h>
-
-char setValue(char *str, int TOTAL);
+#include <string.h>
+#include <ctype.h>
 
 int main() {
-    char str[] = "abcdefghijklmnopqrstuvwxyz"; //Defines the alphabet string
-    int /*i = 0,*/ TOTAL = 26; //Defining a counting variable and the string size as TOTAL (includes \0)
+    char str[1024]; //String where the message will be stored
+    int rotation, i, newletter;
     
-    setValue(str, TOTAL);
+    //printf("What is the message?\n"); //Asks what the message is
+    scanf("%[^\n]s", str); //Reads a statement which contains a space
     
-    /*for(i = 0; i < TOTAL; i++) {
-        printf("%d: %c\n", i, str[i] );
-    }*/
-
+    //printf("What is the rotation?\n");
+    scanf("%d", &rotation); //Reads the rotation
     
-
-    return 0;
-}
-
-// Function which changes each string segment and gives it a value
-char setValue(char *str, int TOTAL) {
-    int u = 0; //Define a counter
-    //printf("Hello\n"); //Testing whether code has passed this point
+    //printf("%d\n", rotation); //Tests whether the rotation has been read correctly 
+    //printf("%s\n", str); //Tests whether it has read the statement correctly
     
-    for(u = 0; u < TOTAL; u++) {
-        str[u] = u;
-        printf("%d", str[u] );
-        //printf("%d: Hi\n", u); //Testing whether code has passed this point
+    for(i = 0; str[i] != 0; i++) {
+        newletter = str[i] + rotation;
+        printf("%c", str[newletter]);
     }
     return 0;
 }
