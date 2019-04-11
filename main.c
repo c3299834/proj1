@@ -7,14 +7,18 @@
 //int DecryptRotationKey(char str[1024], int newletter);*
 //int DecryptRotationNoKey(char str[1024], int newletter);
 //int EncryptRotationKey(char str[1024], int newletter);*
+int EncryptSubKey(char str[1024], char key[1024], int newletter, char alphabet[26]);
 
 int main() {
     char str[1024]; //String where the message will be stored
     int newletter = 0;
+    char key[1024];
+    char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
     
     //DecryptRotationKey(str, newletter);*
     //DecryptRotationNoKey(str, newletter);
     //EncryptRotationKey(str, newletter);*
+    EncryptSubKey(str, key, newletter, alphabet);
     
     
     
@@ -60,7 +64,7 @@ int DecryptRotationKey(char str[1024], int newletter) {
     return 0;
 }
 
-int DecryptRotationNoKey(char str[1024], int newletter) {
+/*int DecryptRotationNoKey(char str[1024], int newletter) {
     int rotation, i, a = 0;
     
     //printf("What is the message?\n"); //Asks what the message is
@@ -95,12 +99,15 @@ int DecryptRotationNoKey(char str[1024], int newletter) {
             str[i] = newletter;
         
         }
-        
+        dictionary("parameters");
+        if(dictionary() == 1) {
+            
+        }
     }
 
     printf("%s\n", str); //Prints the encrypted phrase with the specified rotation
     return 0;
-}
+}*/
 
 int EncryptRotationKey(char str[1024], int newletter) {
     int rotation, i;
@@ -138,5 +145,22 @@ int EncryptRotationKey(char str[1024], int newletter) {
         
     }
     printf("%s\n", str); //Prints the encrypted phrase with the specified rotation
+    return 0;
+}
+
+int EncryptSubKey(char str[1024], char key[1024], newletter, char alphabet[26]) {
+    
+    
+    scanf("%[^\n]s", str);
+    scanf("%[^\n]s", key);
+    for(i = 0; str[i] != 0; i++) {
+        for(j = 0; alphabet[j] < 26; j++) {
+            if(str[i] == alphabet[j]) {
+                a = key[j];
+            }
+        }
+        str[i] = a;
+    }
+    printf("%s\n", str);
     return 0;
 }
