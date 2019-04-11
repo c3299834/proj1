@@ -4,9 +4,20 @@
 #include <string.h>
 #include <ctype.h>
 
+int encryptRotation(char str[1024], int newletter);
+
 int main() {
     char str[1024]; //String where the message will be stored
-    int rotation, i, newletter;
+    int newletter = 0;
+    
+    encryptRotation(str, newletter);
+    
+    
+    return 0;
+}
+
+int encryptRotation(char str[1024], int newletter) {
+    int rotation, i;
     
     //printf("What is the message?\n"); //Asks what the message is
     scanf("%[^\n]s", str); //Reads a statement which contains a space
@@ -19,8 +30,9 @@ int main() {
     
     for(i = 0; str[i] != 0; i++) {
         //printf("%d ", str[i]); //Prints ASCII numbers of the string
+        //printf("%d", i);
         newletter = str[i] - rotation; //Calculates new letter after rotation has been taken into account
-        //printf("%d ", newletter); //Prints the new letter ASCII number
+        //printf("%c", newletter); //Prints the new letter ASCII number
         printf("%c", newletter); //Prints the encrypted phrase with the specified rotation
     }
     return 0;
