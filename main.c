@@ -7,13 +7,14 @@
 //int DecryptRotationKey(char str[1024], int newletter);*
 //int DecryptRotationNoKey(char str[1024], int newletter);
 //int EncryptRotationKey(char str[1024], int newletter);*
-int EncryptSubKey(char str[1024], char key[1024], int newletter, char alphabet[26]);
+int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]);
 
 int main() {
     char str[1024]; //String where the message will be stored
     int newletter = 0;
-    char key[1024];
+    //char key[1024];
     char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
+    char key[26] = "mklijrtnadfhzxwvuyqbcegops";
     
     //DecryptRotationKey(str, newletter);*
     //DecryptRotationNoKey(str, newletter);
@@ -148,18 +149,27 @@ int EncryptRotationKey(char str[1024], int newletter) {
     return 0;
 }
 
-int EncryptSubKey(char str[1024], char key[1024], newletter, char alphabet[26]) {
-    
+int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
+    int i, j, a;
     
     scanf("%[^\n]s", str);
-    scanf("%[^\n]s", key);
+    //printf("ok");
+    //scanf("%[^\n]s", key);
+    //printf("what");
     for(i = 0; str[i] != 0; i++) {
-        for(j = 0; alphabet[j] < 26; j++) {
-            if(str[i] == alphabet[j]) {
-                a = key[j];
+        if(str[i] <= 122 && str[i] >= 97) {
+            for(j = 0; alphabet[j] != 0; j++) {
+                if(str[i] == alphabet[j]) {
+                    a = key[j];
+                }
+            
             }
+            str[i] = a;
         }
-        str[i] = a;
+        else {
+            continue;
+        }
+
     }
     printf("%s\n", str);
     return 0;
