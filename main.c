@@ -31,9 +31,26 @@ int encryptRotation(char str[1024], int newletter) {
     for(i = 0; str[i] != 0; i++) {
         //printf("%d ", str[i]); //Prints ASCII numbers of the string
         //printf("%d", i);
-        newletter = str[i] - rotation; //Calculates new letter after rotation has been taken into account
-        //printf("%c", newletter); //Prints the new letter ASCII number
-        printf("%c", newletter); //Prints the encrypted phrase with the specified rotation
+        if(str[i] - rotation < 65 && str[i] >= 65 && str[i] <= 90) {
+           newletter = str[i] - rotation;
+           newletter = 65 - newletter;
+           newletter = 91 - newletter;
+        }
+        else if(str[i] - rotation > 90 && str[i] - rotation < 97 && str[i] >= 97 && str[i] <= 122) {
+            newletter = str[i] - rotation;
+            newletter = 97 - newletter;
+            newletter = 123 - newletter;
+        }
+        else if(str[i] == 32) {
+            newletter = 32;
+        }
+        else {
+            newletter = str[i] - rotation; //Calculates new letter after rotation has been taken into account
+        }
+        
+        str[i] = newletter;
+        
     }
+    printf("%s\n", str); //Prints the encrypted phrase with the specified rotation
     return 0;
 }
