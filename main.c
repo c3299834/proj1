@@ -7,8 +7,8 @@
 //int DecryptRotationKey(char str[1024], int newletter);*
 //int DecryptRotationNoKey(char str[1024], int newletter);
 //int EncryptRotationKey(char str[1024], int newletter);*
-int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
-//int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
+//int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
+int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
 
 int main() {
     char str[1024]; //String where the message will be stored
@@ -21,8 +21,8 @@ int main() {
     //DecryptRotationKey(str, newletter);*
     //DecryptRotationNoKey(str, newletter);
     //EncryptRotationKey(str, newletter);*
-    EncryptSubKey(str, key, newletter, alphabet);
-    //DecryptSubKey(str, key, newletter, alphabet);
+    //EncryptSubKey(str, key, newletter, alphabet, alphabetcap);
+    DecryptSubKey(str, key, newletter, alphabet, alphabetcap);
     
     
     
@@ -173,6 +173,40 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
             for(j = 0; alphabetcap[j] != 0; j++) {
                 if(str[i] == alphabetcap[j]) {
                     a = key[j];
+                }
+            }
+            str[i] = a;
+        }
+        else {
+            continue;
+        }
+
+    }
+    printf("%s\n", str);
+    return 0;
+}
+
+int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]) {
+    int i, j, a;
+    
+    scanf("%[^\n]s", str);
+    //printf("ok");
+    //scanf("%[^\n]s", key);
+    //printf("what");
+    for(i = 0; str[i] != 0; i++) {
+        if(str[i] <= 122 && str[i] >= 97) {
+            for(j = 0; key[j] != 0; j++) {
+                if(str[i] == key[j]) {
+                    a = alphabet[j];
+                }
+            
+            }
+            str[i] = a;
+        }
+        else if(str[i] <= 90 && str[i] >= 65) {
+            for(j = 0; key[j] != 0; j++) {
+                if(str[i] == key[j] - 32) {
+                    a = alphabet[j];
                 }
             }
             str[i] = a;
