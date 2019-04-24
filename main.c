@@ -7,26 +7,58 @@
 //int DecryptRotationKey(char str[1024], int newletter);*
 //int DecryptRotationNoKey(char str[1024], int newletter);
 //int EncryptRotationKey(char str[1024], int newletter);*
-//int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
-int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
+//int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);*
+//int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);*
+int menu(int option);
 
 int main() {
     char str[1024]; //String where the message will be stored
-    int newletter = 0;
+    int newletter = 0, option, varDefault = 0;
     //char key[1024];
     char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
     char alphabetcap[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     char key[26] = "mklijrtnadfhzxwvuyqbcegops";
     
+    menu(option);
+    
+    do {
+        varDefault = 0;
+        switch(option) {
+            case 1: EncryptRotationKey(str, newletter); break;
+            case 2: DecryptRotationKey(str, newletter); break;
+            case 3: EncryptSubKey(str, key, newletter, alphabet, alphabetcap); break;
+            case 4: DecryptSubKey(str, key, newletter, alphabet, alphabetcap); break;
+            //case 5:
+            //case 6:
+            default: printf("Error, choose a valid option.\n");
+                     scanf("%d", &option);
+                     varDefault = 1;
+                     continue;
+        }
+    } while(varDefault == 1)
+
     //DecryptRotationKey(str, newletter);*
     //DecryptRotationNoKey(str, newletter);
     //EncryptRotationKey(str, newletter);*
-    //EncryptSubKey(str, key, newletter, alphabet, alphabetcap);
-    DecryptSubKey(str, key, newletter, alphabet, alphabetcap);
+    //EncryptSubKey(str, key, newletter, alphabet, alphabetcap);*
+    //DecryptSubKey(str, key, newletter, alphabet, alphabetcap);*
     
     
     
     return 0;
+}
+
+int menu(int option) {
+    printf("This is a message encryptor and decryptor.\n");
+    printf("What would you like to do?\n Please select a number option from the following.\n");
+    printf("1. Encryption of a rotation cipher with a key.\n");
+    printf("2. Decryption of a rotation cipher with a key.\n");
+    printf("3. Encryption of a substitution cipher (Letter substitution key required).\n");
+    printf("4. Decryption of a substitution cipher (Letter substitution key required).\n");
+    //printf("5. Decryption of a rotation cipher without a key.\n");
+    //printf("6. Decryption of a substitution cipher without a key.\n");
+    scanf("%d", &option);
+    return option;
 }
 
 int DecryptRotationKey(char str[1024], int newletter) {
