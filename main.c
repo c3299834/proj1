@@ -213,7 +213,7 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
         else if(str[i] <= 90 && str[i] >= 65) {
             for(j = 0; alphabetcap[j] != 0; j++) {
                 if(str[i] == alphabetcap[j]) {
-                    a = key[j];
+                    a = key[j] - 32;
                 }
             }
             str[i] = a;
@@ -247,7 +247,7 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
         else if(str[i] <= 90 && str[i] >= 65) {
             for(j = 0; key[j] != 0; j++) {
                 if(str[i] == key[j] - 32) {
-                    a = alphabet[j];
+                    a = alphabetcap[j];
                 }
             }
             str[i] = a;
