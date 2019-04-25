@@ -85,13 +85,16 @@ int DecryptRotationKey(char str[1024], int newletter) {
         else if(str[i] - rotation > 90 && str[i] - rotation < 97 && str[i] >= 97 && str[i] <= 122) {
             newletter = str[i] - rotation;
             newletter = 97 - newletter;
-            newletter = 123 - newletter;
+            newletter = 123 - newletter - 32;
         }
         else if(str[i] == 32) {
             newletter = 32;
         }
-        else if((str[i] <= 122 && str[i] >= 97) || (str[i] >= 65 && str[i] <= 90)){
-            newletter = str[i] - rotation; //Calculates new letter after rotation has been taken into account
+        else if(str[i] <= 122 && str[i] >= 97){
+            newletter = str[i] - rotation - 32; //Calculates new letter after rotation has been taken into account
+        }
+        else if(str[i] >= 65 && str[i] <= 90) {
+            newletter = str[i] - rotation;
         }
         else {
             continue;
@@ -174,13 +177,16 @@ int EncryptRotationKey(char str[1024], int newletter) {
         else if(str[i] + rotation > 122 && str[i] >= 97 && str[i] <= 122) {
             newletter = str[i] + rotation;
             newletter = newletter - 122;
-            newletter = 96 + newletter;
+            newletter = 96 + newletter - 32;
         }
         else if(str[i] == 32) {
             newletter = 32;
         }
-        else if((str[i] <= 122 && str[i] >= 97) || (str[i] >= 65 && str[i] <= 90)){
-            newletter = str[i] + rotation; //Calculates new letter after rotation has been taken into account
+        else if(str[i] <= 122 && str[i] >= 97){
+            newletter = str[i] + rotation - 32; //Calculates new letter after rotation has been taken into account
+        }
+        else if(str[i] >= 65 && str[i] <= 90) {
+            newletter = str[i] + rotation;
         }
         else {
             continue;
@@ -204,7 +210,7 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
         if(str[i] <= 122 && str[i] >= 97) {
             for(j = 0; alphabet[j] != 0; j++) {
                 if(str[i] == alphabet[j]) {
-                    a = key[j];
+                    a = key[j] - 32;
                 }
             
             }
@@ -238,7 +244,7 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
         if(str[i] <= 122 && str[i] >= 97) {
             for(j = 0; key[j] != 0; j++) {
                 if(str[i] == key[j]) {
-                    a = alphabet[j];
+                    a = alphabetcap[j];
                 }
             
             }
