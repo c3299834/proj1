@@ -11,12 +11,13 @@
 //int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
 
 int main() {
-    //char str[1024]; //String where the message will be stored
-    int /*newletter = 0,*/ option = 1, varDefault = 0;
-    //char key[1024];
-    //char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
-    //char alphabetcap[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    //char key[26] = "mklijrtnadfhzxwvuyqbcegops";
+    char str[1024]; //String where the message will be stored
+    int newletter = 0, option = 1, varDefault = 0;
+    char space;
+    char key[1024];
+    char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
+    char alphabetcap[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    char key[26] = "mklijrtnadfhzxwvuyqbcegops";
     
     printf("This is a message encryptor and decryptor.\n");
     printf("What would you like to do?\nPlease select a number option from the following.\n");
@@ -26,6 +27,8 @@ int main() {
     printf("4. Decryption of a substitution cipher (Letter substitution key required).\n");
     //printf("5. Decryption of a rotation cipher without a key.\n");
     //printf("6. Decryption of a substitution cipher without a key.\n");
+    //scanf("%[^\n]c", &space);
+    fflush(stdout);
     scanf("%d", &option);
     
     
@@ -39,6 +42,7 @@ int main() {
             //case 5:
             //case 6:
             default: printf("Error, choose a valid option.\n");
+                     fflush(stdout);
                      scanf("%d", &option);
                      varDefault = 1;
                      continue;
@@ -56,7 +60,7 @@ int main() {
     return 0;
 }
 
-/*int DecryptRotationKey(char str[1024], int newletter) {
+int DecryptRotationKey(char str[1024], int newletter) {
     int rotation, i;
     
     //printf("What is the message?\n"); //Asks what the message is
@@ -140,7 +144,7 @@ int main() {
     return 0;
 }*/
 
-/*int EncryptRotationKey(char str[1024], int newletter) {
+int EncryptRotationKey(char str[1024], int newletter) {
     int rotation, i;
     
     //printf("What is the message?\n"); //Asks what the message is
@@ -245,5 +249,5 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
     }
     printf("%s\n", str);
     return 0;
-}*/
+}
 
