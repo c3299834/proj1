@@ -11,12 +11,12 @@
 //int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
 
 int main() {
-    char str[1024]; //String where the message will be stored
-    int newletter = 0, option, varDefault = 0;
+    //char str[1024]; //String where the message will be stored
+    int /*newletter = 0,*/ option = 1, varDefault = 0;
     //char key[1024];
-    char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
-    char alphabetcap[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char key[26] = "mklijrtnadfhzxwvuyqbcegops";
+    //char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
+    //char alphabetcap[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //char key[26] = "mklijrtnadfhzxwvuyqbcegops";
     
     printf("This is a message encryptor and decryptor.\n");
     printf("What would you like to do?\nPlease select a number option from the following.\n");
@@ -32,13 +32,13 @@ int main() {
     do {
         varDefault = 0;
         switch(option) {
-            case 1: printf("Hello");/*EncryptRotationKey(str, newletter);*/ break;
-            case 2: printf("Hi");/*DecryptRotationKey(str, newletter);*/ break;
-            case 3: printf("Hey");/*EncryptSubKey(str, key, newletter, alphabet, alphabetcap);*/ break;
-            case 4: printf("Hu");/*DecryptSubKey(str, key, newletter, alphabet, alphabetcap);*/ break;
+            case 1: printf("Hello\n");/*EncryptRotationKey(str, newletter);*/ break;
+            case 2: printf("Hi\n");/*DecryptRotationKey(str, newletter);*/ break;
+            case 3: printf("Hey\n");/*EncryptSubKey(str, key, newletter, alphabet, alphabetcap);*/ break;
+            case 4: printf("Hu\n");/*DecryptSubKey(str, key, newletter, alphabet, alphabetcap);*/ break;
             //case 5:
             //case 6:
-            default: printf("Error, choose a valid option.");
+            default: printf("Error, choose a valid option.\n");
                      scanf("%d", &option);
                      varDefault = 1;
                      continue;
@@ -56,7 +56,7 @@ int main() {
     return 0;
 }
 
-int DecryptRotationKey(char str[1024], int newletter) {
+/*int DecryptRotationKey(char str[1024], int newletter) {
     int rotation, i;
     
     //printf("What is the message?\n"); //Asks what the message is
@@ -140,7 +140,7 @@ int DecryptRotationKey(char str[1024], int newletter) {
     return 0;
 }*/
 
-int EncryptRotationKey(char str[1024], int newletter) {
+/*int EncryptRotationKey(char str[1024], int newletter) {
     int rotation, i;
     
     //printf("What is the message?\n"); //Asks what the message is
@@ -245,5 +245,5 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
     }
     printf("%s\n", str);
     return 0;
-}
+}*/
 
