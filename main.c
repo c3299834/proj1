@@ -51,48 +51,65 @@ int main() {
     fflush(stdout);
     scanf("%d", &option); //Takes and stores the value provided by user into the variable option.
     
-    
+    /*
+     * The following 'do... while' loop is for if the default option in the switch statement is triggered. Everytime default within the switch
+     * statement is called the loop is repeated until the user inputs a valid choice.
+     */
     do {
-        varDefault = 0;
-        switch(option) {
+        varDefault = 0; //Resets 'varDefault' to 0 so that the loop is not called if either case 1 - 4 is selected.
+        switch(option) { //Checks the value contained in the variable 'option'
+            /*
+             * Case 1 - 4 calls the necessary function in accordance with the user-friendly menu above, followed by break; to move out 
+             * of the switch statement.
+             */
             case 1: EncryptRotationKey(str, newletter); break;
             case 2: DecryptRotationKey(str, newletter); break;
             case 3: EncryptSubKey(str, key, newletter, alphabet); break;
             case 4: DecryptSubKey(str, key, newletter, alphabet); break;
             //case 5:
             //case 6:
-            default: printf("Error, choose a valid option.\n");
-                     fflush(stdout);
-                     scanf("%d", &option);
-                     varDefault = 1;
-                     continue;
+            default: printf("Error, choose a valid option.\n"); //Tells the user to select a valid option
+                     fflush(stdout); //Flushes stdout to allow for user input
+                     scanf("%d", &option); //Takes and stores the value provided by user into the variable option
+                     varDefault = 1; //Sets 'varDefault' to 1(true), telling the while loop to repeat
+                     continue; //Jumps to start of loop, checks condition first
         }
-    } while(varDefault == 1);
+    } while(varDefault == 1); //Checks whether the loop is to be repeated, only true if the default option was selected in the switch statement
 
-    //DecryptRotationKey(str, newletter);*
+    
+    /*
+     * The following function calls are for manual override only and are not part of the program. These are provided so that it is possible
+     * to skip the user-friendly menu while testing a specific function.
+     */
+    //DecryptRotationKey(str, newletter);
     //DecryptRotationNoKey(str, newletter);
-    //EncryptRotationKey(str, newletter);*
-    //EncryptSubKey(str, key, newletter, alphabet, alphabetcap);*
-    //DecryptSubKey(str, key, newletter, alphabet, alphabetcap);*
+    //EncryptRotationKey(str, newletter);
+    //EncryptSubKey(str, key, newletter, alphabet);
+    //DecryptSubKey(str, key, newletter, alphabet);
     
     
     
     return 0;
 }
 
+/*
+ * DecryptRotationKey is the second option provided to the user, it decrypts cipher text using a given key.
+ */
 int DecryptRotationKey(char str[1024], int newletter) {
+    /*
+     * Variable 'rotation' stores the rotation that the user selects
+     * Variable 'i' is used within the for loop as a counter for the string 'str'
+     */
     int rotation, i;
     
-    printf("What is the message?\n"); //Asks what the message is
-    fflush(stdout);
-    scanf(" %[^\n]s", str); //Reads a statement which contains a space
+    printf("What is the message?\n"); //Asks for the user to input the message
+    fflush(stdout); //Flushes stdout to allow for user input
+    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
     
-    printf("What is the rotation?\n"); //Asks what the rotation is
-    fflush(stdout);
-    scanf("%d", &rotation); //Reads the rotation
+    printf("What is the rotation?\n"); //Asks the user for the rotation
+    fflush(stdout); //Flushes stdout to allow for user input
+    scanf("%d", &rotation); //Reads and stores the rotation within the variable 'rotation'
     
-    //printf("%d\n", rotation); //Tests whether the rotation has been read correctly 
-    //printf("%s\n", str); //Tests whether it has read the statement correctly
     
     for(i = 0; str[i] != 0; i++) {
         //printf("%d ", str[i]); //Prints ASCII numbers of the string
@@ -176,15 +193,13 @@ int EncryptRotationKey(char str[1024], int newletter) {
     int rotation = 1, i = 0;
     
     printf("What is the message?\n"); //Asks what the message is
-    fflush(stdout);
+    fflush(stdout); //Flushes stdout to allow for user input
     scanf(" %[^\n]s", str); //Reads a statement which contains a space
     
     printf("What is the rotation?\n"); //Asks what the rotation is
-    fflush(stdout);
+    fflush(stdout); //Flushes stdout to allow for user input
     scanf("%d", &rotation); //Reads the rotation
     
-    //printf("%d\n", rotation); //Tests whether the rotation has been read correctly 
-    //printf("%s\n", str); //Tests whether it has read the statement correctly
     
     for(i = 0; str[i] != 0; i++) {
         //printf("%d ", str[i]); //Prints ASCII numbers of the string
@@ -223,7 +238,7 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
     int i, j, a;
     
     printf("What is the message?\n"); //Asks what the message is
-    fflush(stdout);
+    fflush(stdout); //Flushes stdout to allow for user input
     scanf(" %[^\n]s", str);
     //scanf("%[^\n]s", key);
     for(i = 0; str[i] != 0; i++) {
@@ -257,7 +272,7 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
     int i, j, a;
     
     printf("What is the message?\n"); //Asks what the message is
-    fflush(stdout);
+    fflush(stdout); //Flushes stdout to allow for user input
     scanf(" %[^\n]s", str);
     
     //scanf("%[^\n]s", key);
