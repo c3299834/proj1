@@ -4,21 +4,36 @@
 #include <string.h>
 #include <ctype.h>
 
+/*
+ * Function prototypes for the below function definitions, which are to decrypt and encrypt text using a rotation cipher or substitution cipher.
+ * The string 'str'(user message input) and variable 'newletter'(keeps track of ascii value) are required for each function. The strings 'key' 
+ * and 'alphabet' are required for the substitution ciphers.
+ */
 int DecryptRotationKey(char str[1024], int newletter);
 //int DecryptRotationNoKey(char str[1024], int newletter);
 int EncryptRotationKey(char str[1024], int newletter);
-int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
-int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]);
+int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]);
+int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]);
 
 int main() {
-    char str[1024]; //String where the message will be stored
+    char str[1024]; //String where the message will be stored, only need one as the string will be re-initialised everytime the program is run
+    /*
+     * The variable 'newletter' contains the changed ascii value for the encryption and decryption of the rotation cipher. The string 'str' and
+     * the variable 'newletter' are contained within a for loop so the value of 'newletter' does not need to be remembered.
+     * 'option' contains the user selected value which is used within the switch statement to decide what function to call.
+     * 'varDefault' keeps a track of whether the default option in the switch statement has been called, 1 for true, 0 for false.
+     */
     int newletter = 0, option = 1, varDefault = 0;
-    char space;
-    //char key[1024];
-    char alphabet[26] = "abcdefghijklmnopqrstuvwxyz";
-    char alphabetcap[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    char key[26] = "mklijrtnadfhzxwvuyqbcegops";
-    
+    //char key[1024]; 
+    //Declaration of the alphabet, which is to be used in the encryption and decryption of a substitution cipher
+    char alphabet[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    //Hard-code declaration of the key to be used in the encryption and decryption of a substitution cipher (For testing only, temporary)
+    char key[26] = "MKLIJRTNADFHZXWVUYQBCEGOPS";
+
+    /*
+     * Following is the user-friendly menu, which asks the user to choose the function the program is to perform. The section contains a 
+     * sequence of printf(); statements that help the user easily identify the options.
+     */
     printf("This is a message encryptor and decryptor.\n");
     printf("What would you like to do?\nPlease select a number option from the following.\n");
     printf("1. Encryption of a rotation cipher with a key.\n");
@@ -27,9 +42,14 @@ int main() {
     printf("4. Decryption of a substitution cipher (Letter substitution key required).\n");
     //printf("5. Decryption of a rotation cipher without a key.\n");
     //printf("6. Decryption of a substitution cipher without a key.\n");
-    //scanf("%[^\n]c", &space);
+    /*
+     * Since there is an issue related to the buffering of the eclipse terminal emulator the fflush(stdout); command is used to clear the
+     * output buffer and move the buffered data to the console. This concept is beyond ENGG1003.
+     * In essence, it pushes the previous printf(); statements to the console and removes any spaces or data that the scanf(); may pick up 
+     * (which is the reason as to why the scanf(); appears to be skipped). This allows the user to provide input data to the program.
+     */
     fflush(stdout);
-    scanf("%d", &option);
+    scanf("%d", &option); //Takes and stores the value provided by user into the variable option.
     
     
     do {
@@ -37,8 +57,8 @@ int main() {
         switch(option) {
             case 1: EncryptRotationKey(str, newletter); break;
             case 2: DecryptRotationKey(str, newletter); break;
-            case 3: EncryptSubKey(str, key, newletter, alphabet, alphabetcap); break;
-            case 4: DecryptSubKey(str, key, newletter, alphabet, alphabetcap); break;
+            case 3: EncryptSubKey(str, key, newletter, alphabet); break;
+            case 4: DecryptSubKey(str, key, newletter, alphabet); break;
             //case 5:
             //case 6:
             default: printf("Error, choose a valid option.\n");
@@ -199,7 +219,7 @@ int EncryptRotationKey(char str[1024], int newletter) {
     return 0;
 }
 
-int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]) {
+int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
     int i, j, a;
     
     printf("What is the message?\n"); //Asks what the message is
@@ -209,17 +229,17 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
     for(i = 0; str[i] != 0; i++) {
         if(str[i] <= 122 && str[i] >= 97) {
             for(j = 0; alphabet[j] != 0; j++) {
-                if(str[i] == alphabet[j]) {
-                    a = key[j] - 32;
+                if(str[i] == alphabet[j] + 32) {
+                    a = key[j];
                 }
             
             }
             str[i] = a;
         }
         else if(str[i] <= 90 && str[i] >= 65) {
-            for(j = 0; alphabetcap[j] != 0; j++) {
-                if(str[i] == alphabetcap[j]) {
-                    a = key[j] - 32;
+            for(j = 0; alphabet[j] != 0; j++) {
+                if(str[i] == alphabet[j]) {
+                    a = key[j];
                 }
             }
             str[i] = a;
@@ -233,18 +253,19 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
     return 0;
 }
 
-int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], char alphabetcap[26]) {
+int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
     int i, j, a;
     
     printf("What is the message?\n"); //Asks what the message is
     fflush(stdout);
     scanf(" %[^\n]s", str);
+    
     //scanf("%[^\n]s", key);
     for(i = 0; str[i] != 0; i++) {
         if(str[i] <= 122 && str[i] >= 97) {
             for(j = 0; key[j] != 0; j++) {
-                if(str[i] == key[j]) {
-                    a = alphabetcap[j];
+                if(str[i] == key[j] + 32) {
+                    a = alphabet[j];
                 }
             
             }
@@ -252,8 +273,8 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
         }
         else if(str[i] <= 90 && str[i] >= 65) {
             for(j = 0; key[j] != 0; j++) {
-                if(str[i] == key[j] - 32) {
-                    a = alphabetcap[j];
+                if(str[i] == key[j]) {
+                    a = alphabet[j];
                 }
             }
             str[i] = a;
