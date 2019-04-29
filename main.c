@@ -93,7 +93,8 @@ int main() {
 }
 
 /*
- * DecryptRotationKey is the second option provided to the user, it decrypts cipher text using a given key.
+ * DecryptRotationKey is the second option provided to the user, it decrypts text using a given key.
+ * Each value in the string(which is a letter) is decreased by the specified rotation to decrypt the given message.
  */
 int DecryptRotationKey(char str[1024], int newletter) {
     /*
@@ -202,6 +203,7 @@ int DecryptRotationKey(char str[1024], int newletter) {
 
 /*
  * EncryptRotationKey is the first option provided to the user, it encrypts text using a given key.
+ * Each value in the string(which is a letter) is increased by the specified rotation to encrypt the given message.
  */
 int EncryptRotationKey(char str[1024], int newletter) {
     /*
@@ -258,76 +260,104 @@ int EncryptRotationKey(char str[1024], int newletter) {
         str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter'
         
     }
-    printf("%s\n", str); //Prints the entire decrypted phrase with the specified rotation
+    printf("%s\n", str); //Prints the entire encrypted phrase with the specified rotation
     return 0; //Terminates the program as it has completed its objective
 }
 
+/*
+ * EncryptSubKey is the third option provided to the user, it encrypts text using a given alphabet key.
+ * The function sorts through each value of a given string and compares it to the alphabet. When the alphabet and string values match,
+ * the string value is replaced with the key value that corresponds to the alphabet.
+ */
 int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
-    int i, j, a;
+    /*
+     * Variable 'i' is used within the for loop as a counter for the string 'str'
+     * Variable 'j' is used as a counter for the alphabet string that is used within the inner for loop
+     */
+    int i, j;
     
-    printf("What is the message?\n"); //Asks what the message is
+    printf("What is the message?\n"); //Asks for the user to input the message
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str);
+    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
     //scanf("%[^\n]s", key);
-    for(i = 0; str[i] != 0; i++) {
-        if(str[i] <= 122 && str[i] >= 97) {
-            for(j = 0; alphabet[j] != 0; j++) {
-                if(str[i] == alphabet[j] + 32) {
-                    a = key[j];
-                }
+    /*
+     * Variable 'i' is initiated to contain the value 0, and increments by 1 each time the loop is repeated.
+     * Each string ends with the value 0, while the ASCII value of str[i] does not equal 0, the loop will continue to repeat.
+     */
+    for(i = 0; str[i] != 0; i++) { //For loop scans through all values contained within the given string
+        if(str[i] <= 122 && str[i] >= 97) { //Checks whether the letter at position 'i' is a lowercase letter
+            for(j = 0; alphabet[j] != 0; j++) { //For loop scans through all values contained within the string 'alphabet'
+                if(str[i] == alphabet[j] + 32) { //Each value in the string 'alphabet'(+ 32 since str[i] is lowercase) is compared 
+                                                 //with the value 'str[i]', if they are equal,
+                    newletter = key[j];          //'newletter' takes the value of the corresponding letter in the key, 
+                }                                // i.e. alphabet[16], then newletter = key[16];
             
             }
-            str[i] = a;
+            str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter' (Value of i changes for each loop repeat)
         }
-        else if(str[i] <= 90 && str[i] >= 65) {
-            for(j = 0; alphabet[j] != 0; j++) {
-                if(str[i] == alphabet[j]) {
-                    a = key[j];
+        else if(str[i] <= 90 && str[i] >= 65) { //Checks whether the letter at position 'i' is an uppercase letter
+            for(j = 0; alphabet[j] != 0; j++) { //For loop scans through all values contained within the string 'alphabet'
+                if(str[i] == alphabet[j]) { //Each value in the string 'alphabet' is compared with the value str[i]
+                    newletter = key[j]; //'newletter' takes the value of the corresponding letter(of the string 'alphabet') in the key
                 }
             }
-            str[i] = a;
+            str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter' (Value of i changes for each loop repeat)
         }
-        else {
+        else { //Anything that is not a letter(ASCII values between 65 and 90, and 97 and 122) is skipped
             continue;
         }
 
     }
-    printf("%s\n", str);
-    return 0;
+    printf("%s\n", str); //Prints the entire encrypted phrase with the specified rotation
+    return 0; //Terminates the program as it has completed its objective
 }
 
+/*
+ * DecryptSubKey is the fourth option provided to the user, it decrypts text using a given alphabet key.
+ * The function sorts through each value of a given string and compares it to the key. When the key and string values match,
+ * the string value is replaced with the alphabet value that corresponds to the key.
+ */
 int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
-    int i, j, a;
+    /*
+     * Variable 'i' is used within the for loop as a counter for the string 'str'
+     * Variable 'j' is used as a counter for the alphabet string that is used within the inner for loop
+     */
+    int i, j;
     
-    printf("What is the message?\n"); //Asks what the message is
+    printf("What is the message?\n"); //Asks for the user to input the message
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str);
+    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
     
     //scanf("%[^\n]s", key);
-    for(i = 0; str[i] != 0; i++) {
-        if(str[i] <= 122 && str[i] >= 97) {
-            for(j = 0; key[j] != 0; j++) {
-                if(str[i] == key[j] + 32) {
-                    a = alphabet[j];
-                }
+    /*
+     * Variable 'i' is initiated to contain the value 0, and increments by 1 each time the loop is repeated.
+     * Each string ends with the value 0, while the ASCII value of str[i] does not equal 0, the loop will continue to repeat.
+     */
+    for(i = 0; str[i] != 0; i++) { //For loop scans through all values contained within the given string
+        if(str[i] <= 122 && str[i] >= 97) { //Checks whether the letter at position 'i' is a lowercase letter
+            for(j = 0; key[j] != 0; j++) { //For loop scans through all values contained within the string 'key'
+                if(str[i] == key[j] + 32) {  //Each value in the string 'key'(+ 32 since str[i] is lowercase) is compared
+                                             //with the value 'str[i]', if they are equal,
+                    newletter = alphabet[j]; //'newletter' takes the value of the corresponding letter in the key,
+                }                            // i.e. key[16], then newletter = alphabet[16];
             
             }
-            str[i] = a;
+            str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter' (Value of i changes for each loop repeat)
         }
-        else if(str[i] <= 90 && str[i] >= 65) {
-            for(j = 0; key[j] != 0; j++) {
-                if(str[i] == key[j]) {
-                    a = alphabet[j];
+        else if(str[i] <= 90 && str[i] >= 65) { //Checks whether the letter at position 'i' is an uppercase letter
+            for(j = 0; key[j] != 0; j++) { //For loop scans through all values contained within the string 'key'
+                if(str[i] == key[j]) { //Each value in the string 'key' is compared with the value str[i]
+                    newletter = alphabet[j]; //'newletter' takes the value of the corresponding letter(of the string 'key') in the alphabet
                 }
             }
-            str[i] = a;
+            str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter' (Value of i changes for each loop repeat)
         }
-        else {
+        else { //Anything that is not a letter(ASCII values between 65 and 90, and 97 and 122) is skipped
             continue;
         }
 
     }
-    printf("%s\n", str);
-    return 0;
+    printf("%s\n", str); //Prints the entire decrypted phrase with the specified rotation
+    return 0; //Terminates the program as it has completed its objective
 }
 
