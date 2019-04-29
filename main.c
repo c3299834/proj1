@@ -119,7 +119,7 @@ int DecryptRotationKey(char str[1024], int newletter, FILE *textfile2) {
     printf("Would you like to read from the text file? (Y/N)\n"); //Asks the user if they would like to use the information in the text file
                                                                   //or not 
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %c", &no); //Reads the letter input from the user, only the first letter is stored in no
+    scanf(" %c", &no); //Reads the letter input from the user, only the first letter is stored in no.
     
     if(no == 'N' || no == 'n') { //Tests whether the user said no. If they said no, ask for their input.
         printf("What is the message?\n"); //Asks for the user to input the message
