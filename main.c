@@ -8,6 +8,7 @@
  * Function prototypes for the below function definitions, which are to decrypt and encrypt text using a rotation cipher or substitution cipher.
  * The string 'str'(user message input) and variable 'newletter'(keeps track of ascii value) are required for each function. The strings 'key' 
  * and 'alphabet' are required for the substitution ciphers.
+ * Choosing between functions is detailed above the user-friendly menu
  */
 int DecryptRotationKey(char str[1024], int newletter, FILE *textfile2);
 int EncryptRotationKey(char str[1024], int newletter, FILE *textfile2);
@@ -107,6 +108,8 @@ int main() {
 /*
  * DecryptRotationKey is the second option provided to the user, it decrypts text using a given key.
  * Each value in the string(which is a letter) is decreased by the specified rotation to decrypt the given message.
+ * Input is provided by the string 'str[1024]'(input message). Output is written to stdout and to 'text2'. Return value is 0 as the program is
+ * terminated at the end of the function.
  */
 int DecryptRotationKey(char str[1024], int newletter, FILE *textfile2) {
     /*
@@ -181,6 +184,8 @@ int DecryptRotationKey(char str[1024], int newletter, FILE *textfile2) {
 /*
  * EncryptRotationKey is the first option provided to the user, it encrypts text using a given key.
  * Each value in the string(which is a letter) is increased by the specified rotation to encrypt the given message.
+ * Input is provided by the string 'str[1024]'(input message). Output is written to stdout and to 'text2'. Return value is 0 as the program is
+ * terminated at the end of the function.
  */
 int EncryptRotationKey(char str[1024], int newletter, FILE *textfile2) {
     /*
@@ -255,6 +260,8 @@ int EncryptRotationKey(char str[1024], int newletter, FILE *textfile2) {
  * EncryptSubKey is the third option provided to the user, it encrypts text using a given alphabet key.
  * The function sorts through each value of a given string and compares it to the alphabet. When the alphabet and string values match,
  * the string value is replaced with the key value that corresponds to the alphabet.
+ * Input is provided by the strings 'str[1024]'(input message), key[26] and alphabet[26]. Output is written to stdout and to 'text2'. Return value is 0 as the program is
+ * terminated at the end of the function.
  */
 int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], FILE *textfile2) {
     /*
@@ -314,6 +321,8 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
  * DecryptSubKey is the fourth option provided to the user, it decrypts text using a given alphabet key.
  * The function sorts through each value of a given string and compares it to the key. When the key and string values match,
  * the string value is replaced with the alphabet value that corresponds to the key.
+ * Input is provided by the strings 'str[1024]'(input message), key[26] and alphabet[26]. Output is written to stdout and to 'text2'. Return value is 0 as the program is
+ * terminated at the end of the function.
  */
 int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], FILE *textfile2) {
     /*
