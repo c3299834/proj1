@@ -28,7 +28,26 @@ int main() {
     //Declaration of the alphabet, which is to be used in the encryption and decryption of a substitution cipher
     char alphabet[26] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     //Hard-code declaration of the key to be used in the encryption and decryption of a substitution cipher (For testing only, temporary)
-    char key[26] = "MKLIJRTNADFHZXWVUYQBCEGOPS";
+    char key[26];
+    
+    FILE *keyfile; //Defines the pointer keyfile as a file
+    keyfile = fopen("key", "r"); //Opens the file key and stores it in the variable keyfile
+    if(keyfile == NULL) { //Checks that there are no issues with the file
+        printf("Error opening file!\n"); //If there are issues, the user is given a warning message
+    }
+    else {
+        fscanf(keyfile, "%[^\n]s", key); //Otherwise, the file is scanned and it's contents stored in the string 'key'
+    }
+    fclose(keyfile); //File is closed as it no longer needs to be accessed
+    
+    FILE *textfile; //Defines the pointer textfile as a file
+    textfile = fopen("text", "r"); //Opens the file text and stores it in the variable textfile
+    if(keyfile == NULL) { //Checks that there are no issues with the file
+        printf("Error opening file!\n"); //If there are issues, the user is given a warning message
+    }
+    else {
+        fscanf(textfile, "%[^\n]s", str); //Otherwise, the file is scanned and it's contents stored in the string 'str'
+    }
 
     /*
      * Following is the user-friendly menu, which asks the user to choose the function the program is to perform. The section contains a 
@@ -102,10 +121,18 @@ int DecryptRotationKey(char str[1024], int newletter) {
      * Variable 'i' is used within the for loop as a counter for the string 'str'
      */
     int rotation, i;
+    char no; //Defines the char 'no', this stores the user's reply as to whether they would like to use file I/O or not
     
-    printf("What is the message?\n"); //Asks for the user to input the message
+    printf("Would you like to read from the text file? (Y/N)\n"); //Asks the user if they would like to use the information in the text file
+                                                                  //or not 
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    scanf(" %c", &no); //Reads the letter input from the user, only the first letter is stored in no
+    
+    if(no == 'N' || no == 'n') { //Tests whether the user said no. If they said no, ask for their input.
+        printf("What is the message?\n"); //Asks for the user to input the message
+        fflush(stdout); //Flushes stdout to allow for user input
+        scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    }
     
     printf("What is the rotation?\n"); //Asks the user for the rotation
     fflush(stdout); //Flushes stdout to allow for user input
@@ -211,10 +238,18 @@ int EncryptRotationKey(char str[1024], int newletter) {
      * Variable 'i' is used within the for loop as a counter for the string 'str'
      */
     int rotation, i;
+    char no; //Defines the char 'no', this stores the user's reply as to whether they would like to use file I/O or not
     
-    printf("What is the message?\n"); //Asks for the user to input the message
+    printf("Would you like to read from the text file? (Y/N)\n"); //Asks the user if they would like to use the information in the text file
+                                                                  //or not 
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    scanf(" %c", &no); //Reads the letter input from the user, only the first letter is stored in no
+    
+    if(no == 'N' || no == 'n') { //Tests whether the user said no. If they said no, ask for their input.
+        printf("What is the message?\n"); //Asks for the user to input the message
+        fflush(stdout); //Flushes stdout to allow for user input
+        scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    }
     
     printf("What is the rotation?\n"); //Asks the user for the rotation
     fflush(stdout); //Flushes stdout to allow for user input
@@ -275,10 +310,19 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
      * Variable 'j' is used as a counter for the alphabet string that is used within the inner for loop
      */
     int i, j;
+    char no; //Defines the char 'no', this stores the user's reply as to whether they would like to use file I/O or not
     
-    printf("What is the message?\n"); //Asks for the user to input the message
+    printf("Would you like to read from the text file? (Y/N)\n"); //Asks the user if they would like to use the information in the text file
+                                                                  //or not 
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    scanf(" %c", &no); //Reads the letter input from the user, only the first letter is stored in no
+    
+    if(no == 'N' || no == 'n') { //Tests whether the user said no. If they said no, ask for their input.
+        printf("What is the message?\n"); //Asks for the user to input the message
+        fflush(stdout); //Flushes stdout to allow for user input
+        scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    }
+
     //scanf("%[^\n]s", key);
     /*
      * Variable 'i' is initiated to contain the value 0, and increments by 1 each time the loop is repeated.
@@ -323,12 +367,19 @@ int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
      * Variable 'j' is used as a counter for the alphabet string that is used within the inner for loop
      */
     int i, j;
+    char no; //Defines the char 'no', this stores the user's reply as to whether they would like to use file I/O or not
     
-    printf("What is the message?\n"); //Asks for the user to input the message
+    printf("Would you like to read from the text file? (Y/N)\n"); //Asks the user if they would like to use the information in the text file
+                                                                  //or not 
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    scanf(" %c", &no); //Reads the letter input from the user, only the first letter is stored in no
     
-    //scanf("%[^\n]s", key);
+    if(no == 'N' || no == 'n') { //Tests whether the user said no. If they said no, ask for their input.
+        printf("What is the message?\n"); //Asks for the user to input the message
+        fflush(stdout); //Flushes stdout to allow for user input
+        scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
+    }
+    
     /*
      * Variable 'i' is initiated to contain the value 0, and increments by 1 each time the loop is repeated.
      * Each string ends with the value 0, while the ASCII value of str[i] does not equal 0, the loop will continue to repeat.
