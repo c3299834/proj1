@@ -111,37 +111,48 @@ int DecryptRotationKey(char str[1024], int newletter) {
     scanf("%d", &rotation); //Reads and stores the rotation within the variable 'rotation'
     
     
+    /*
+     * Variable 'i' is initiated to contain the value 0, and increments by 1 each time the loop is repeated.
+     * Each string ends with the value 0, while the ASCII value of str[i] does not equal 0, the loop will continue to repeat.
+     */
     for(i = 0; str[i] != 0; i++) {
-        //printf("%d ", str[i]); //Prints ASCII numbers of the string
-        //printf("%d", i);
+        /*
+         * Checks whether the letter is a capital letter, and if the subtraction of the rotation from the ASCII value remains
+         * a capital letter. If str[i] - rotation is no longer a capital letter, the program needs to cycle back to the value of 'Z'
+         * (which has ASCII value 90) and subtract the difference between 65 and 'str[i] - rotation' from 'Z' to complete the rotation.
+         */
         if(str[i] - rotation < 65 && str[i] >= 65 && str[i] <= 90) {
-           newletter = str[i] - rotation;
-           newletter = 65 - newletter;
-           newletter = 91 - newletter;
+           newletter = str[i] - rotation; //Calculates the rotation
+           newletter = 65 - newletter; //Calculates how much the rotation dropped below 'A'
+           newletter = 91 - newletter; //Calculates rotation beginning back at 'Z'
         }
+        /*
+         * The next if statement repeats the process as above with the exception that it is checking for lowercase letters.
+         * Checks whether the letter is a lowercase letter, and if the subtraction of the rotation from the ASCII value remains
+         * a lowercase letter. If str[i] - rotation is no longer a lowercase letter, the program needs to cycle back to the value of 'z'
+         * (which has ASCII value 122) and subtract the difference between 97 and 'str[i] - rotation' from 'z' to complete the rotation.
+         */
         else if(str[i] - rotation > 90 && str[i] - rotation < 97 && str[i] >= 97 && str[i] <= 122) {
-            newletter = str[i] - rotation;
-            newletter = 97 - newletter;
-            newletter = 123 - newletter - 32;
+            newletter = str[i] - rotation; //Calculates the rotation
+            newletter = 97 - newletter; //Calculates how much the rotation dropped below 'a'
+            newletter = 123 - newletter - 32; //Calculates rotation beginning at 'z', subtraction of 32 is necessary to convert lowercase to uppercase
         }
-        else if(str[i] == 32) {
-            newletter = 32;
+        else if(str[i] <= 122 && str[i] >= 97){ //Checks if the letter is lowercase(ASCII value between 97 and 122)
+            newletter = str[i] - rotation - 32; //Calculates new ASCII value by subtracting the rotation and the number 32 to convert the letter
+                                                //into a capital
         }
-        else if(str[i] <= 122 && str[i] >= 97){
-            newletter = str[i] - rotation - 32; //Calculates new letter after rotation has been taken into account
+        else if(str[i] >= 65 && str[i] <= 90) { //Tests whether the letter is a capital(ASCII value between 65 and 90)
+            newletter = str[i] - rotation; //Calculates new ASCII value by subtracting the rotation, storing the new value in 'newletter'
         }
-        else if(str[i] >= 65 && str[i] <= 90) {
-            newletter = str[i] - rotation;
-        }
-        else {
+        else { //Anything that is not a letter(ASCII values between 65 and 90, and 97 and 122) is skipped
             continue;
         }
         
-        str[i] = newletter;
+        str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter'
         
     }
-    printf("%s\n", str); //Prints the encrypted phrase with the specified rotation
-    return 0;
+    printf("%s\n", str); //Prints the entire decrypted phrase with the specified rotation
+    return 0; //Terminates the program as it has completed its objective
 }
 
 /*int DecryptRotationNoKey(char str[1024], int newletter) {
@@ -189,49 +200,66 @@ int DecryptRotationKey(char str[1024], int newletter) {
     return 0;
 }*/
 
+/*
+ * EncryptRotationKey is the first option provided to the user, it encrypts text using a given key.
+ */
 int EncryptRotationKey(char str[1024], int newletter) {
-    int rotation = 1, i = 0;
+    /*
+     * Variable 'rotation' stores the rotation that the user selects
+     * Variable 'i' is used within the for loop as a counter for the string 'str'
+     */
+    int rotation, i;
     
-    printf("What is the message?\n"); //Asks what the message is
+    printf("What is the message?\n"); //Asks for the user to input the message
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf(" %[^\n]s", str); //Reads a statement which contains a space
+    scanf(" %[^\n]s", str); //Reads data input and stores in the string 'str', [^\n] enables scanf(); to read and store spaces
     
-    printf("What is the rotation?\n"); //Asks what the rotation is
+    printf("What is the rotation?\n"); //Asks the user for the rotation
     fflush(stdout); //Flushes stdout to allow for user input
-    scanf("%d", &rotation); //Reads the rotation
+    scanf("%d", &rotation); //Reads and stores the rotation within the variable 'rotation'
     
-    
+    /*
+     * Variable 'i' is initiated to contain the value 0, and increments by 1 each time the loop is repeated.
+     * Each string ends with the value 0, while the ASCII value of str[i] does not equal 0, the loop will continue to repeat.
+     */
     for(i = 0; str[i] != 0; i++) {
-        //printf("%d ", str[i]); //Prints ASCII numbers of the string
-        //printf("%d", i);
+        /*
+         * Checks whether the letter is a capital letter, and if the addition of the rotation from the ASCII value remains
+         * a capital letter. If str[i] + rotation is no longer a capital letter, the program needs to cycle back to the value of 'A'
+         * (which has ASCII value 65) and add the difference between 90 and 'str[i] + rotation' to 'A' to complete the rotation.
+         */
         if(str[i] + rotation > 90 && str[i] >= 65 && str[i] <= 90) {
-           newletter = str[i] + rotation;
-           newletter = newletter - 90;
-           newletter = 64 + newletter;
+           newletter = str[i] + rotation; //Calculates the rotation
+           newletter = newletter - 90; //Calculates how much the rotation went above 'Z'
+           newletter = 64 + newletter; //Calculates rotation beginning back at 'A'
         }
+        /*
+         * The next if statement repeats the process as above with the exception that it is checking for lowercase letters.
+         * Checks whether the letter is a lowercase letter, and if the addition of the rotation from the ASCII value remains
+         * a lowercase letter. If str[i] + rotation is no longer a lowercase letter, the program needs to cycle back to the value of 'a'
+         * (which has ASCII value 97) and add the difference between 122 and 'str[i] + rotation' to 'a' to complete the rotation.
+         */
         else if(str[i] + rotation > 122 && str[i] >= 97 && str[i] <= 122) {
-            newletter = str[i] + rotation;
-            newletter = newletter - 122;
-            newletter = 96 + newletter - 32;
+            newletter = str[i] + rotation; //Calculates the rotation
+            newletter = newletter - 122; //Calculates how much the rotation went above 'z'
+            newletter = 96 + newletter - 32; //Calculates rotation beginning at 'a', subtraction of 32 is necessary to convert lowercase to uppercase
         }
-        else if(str[i] == 32) {
-            newletter = 32;
+        else if(str[i] <= 122 && str[i] >= 97){ //Checks if the letter is lowercase(ASCII value between 97 and 122)
+            newletter = str[i] + rotation - 32; //Calculates new ASCII value by adding the rotation and subtracting the number 32 to convert the letter
+                                                //into a capital
         }
-        else if(str[i] <= 122 && str[i] >= 97){
-            newletter = str[i] + rotation - 32; //Calculates new letter after rotation has been taken into account
+        else if(str[i] >= 65 && str[i] <= 90) { //Tests whether the letter is a capital(ASCII value between 65 and 90)
+            newletter = str[i] + rotation; //Calculates new ASCII value by adding the rotation, storing the new value in 'newletter'
         }
-        else if(str[i] >= 65 && str[i] <= 90) {
-            newletter = str[i] + rotation;
-        }
-        else {
+        else { //Anything that is not a letter(ASCII values between 65 and 90, and 97 and 122) is skipped
             continue;
         }
         
-        str[i] = newletter;
+        str[i] = newletter; //The ASCII value of str[i] takes and stores the value of 'newletter'
         
     }
-    printf("%s\n", str); //Prints the encrypted phrase with the specified rotation
-    return 0;
+    printf("%s\n", str); //Prints the entire decrypted phrase with the specified rotation
+    return 0; //Terminates the program as it has completed its objective
 }
 
 int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
