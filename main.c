@@ -30,6 +30,12 @@ int main() {
     //Hard-code declaration of the key to be used in the encryption and decryption of a substitution cipher (For testing only, temporary)
     char key[26];
     
+    /*
+     * Declaration of 3 files
+     * keyfile - The file "key" stores the alphabet key for the substitution ciphers
+     * textfile - The file "textin" contains the text to be read by the program
+     * textfile2 - The file "text2" contains the output text written after the program has run
+     */
     FILE *keyfile; //Defines the pointer keyfile as a file
     keyfile = fopen("key", "r"); //Opens the file key and stores it in the variable keyfile(File 'key' holds the alphabet substitutions)
         if(keyfile == NULL) { //Checks that there are no issues with the file
@@ -63,8 +69,6 @@ int main() {
     printf("2. Decryption of a rotation cipher with a key.\n");
     printf("3. Encryption of a substitution cipher (Letter substitution key required).\n");
     printf("4. Decryption of a substitution cipher (Letter substitution key required).\n");
-    //printf("5. Decryption of a rotation cipher without a key.\n");
-    //printf("6. Decryption of a substitution cipher without a key.\n");
     /*
      * Since there is an issue related to the buffering of the eclipse terminal emulator the fflush(stdout); command is used to clear the
      * output buffer and move the buffered data to the console. This concept is beyond ENGG1003.
@@ -97,19 +101,6 @@ int main() {
         }
     } while(varDefault == 1); //Checks whether the loop is to be repeated, only true if the default option was selected in the switch statement
 
-    
-    /*
-     * The following function calls are for manual override only and are not part of the program. These are provided so that it is possible
-     * to skip the user-friendly menu while testing a specific function.
-     */
-    //DecryptRotationKey(str, newletter);
-    //DecryptRotationNoKey(str, newletter);
-    //EncryptRotationKey(str, newletter);
-    //EncryptSubKey(str, key, newletter, alphabet);
-    //DecryptSubKey(str, key, newletter, alphabet);
-    
-    
-    
     return 0;
 }
 
