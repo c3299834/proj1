@@ -52,7 +52,7 @@ int main() {
         //fclose(textfile);
         
     FILE *textfile2; //Defines the pointer textfile2 as a file
-    textfile2 = fopen("text2", "a"); //Opens the file textout and stores it in the variable textfile2(Encrypted or decrypted data is written to this file)
+    textfile2 = fopen("text2", "w"); //Opens the file textout and stores it in the variable textfile2(Encrypted or decrypted data is written to this file)
 
     /*
      * Following is the user-friendly menu, which asks the user to choose the function the program is to perform. The section contains a 
