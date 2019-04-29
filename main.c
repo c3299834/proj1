@@ -12,11 +12,12 @@
 int DecryptRotationKey(char str[1024], int newletter);
 //int DecryptRotationNoKey(char str[1024], int newletter);
 int EncryptRotationKey(char str[1024], int newletter);
-int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]);
+int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], FILE *textfile2);
 int DecryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]);
 
 int main() {
     char str[1024]; //String where the message will be stored, only need one as the string will be re-initialised everytime the program is run
+    
     /*
      * The variable 'newletter' contains the changed ascii value for the encryption and decryption of the rotation cipher. The string 'str' and
      * the variable 'newletter' are contained within a for loop so the value of 'newletter' does not need to be remembered.
@@ -31,23 +32,26 @@ int main() {
     char key[26];
     
     FILE *keyfile; //Defines the pointer keyfile as a file
-    keyfile = fopen("key", "r"); //Opens the file key and stores it in the variable keyfile
-    if(keyfile == NULL) { //Checks that there are no issues with the file
-        printf("Error opening file!\n"); //If there are issues, the user is given a warning message
-    }
-    else {
-        fscanf(keyfile, "%[^\n]s", key); //Otherwise, the file is scanned and it's contents stored in the string 'key'
-    }
-    fclose(keyfile); //File is closed as it no longer needs to be accessed
+    keyfile = fopen("key", "r"); //Opens the file key and stores it in the variable keyfile(File 'key' holds the alphabet substitutions)
+        if(keyfile == NULL) { //Checks that there are no issues with the file
+            printf("Error opening file!\n"); //If there are issues, the user is given a warning message
+        }
+        else {
+            fscanf(keyfile, "%[^\n]s", key); //Otherwise, the file is scanned and it's contents stored in the string 'key'
+        }
+        fclose(keyfile); //File is closed as it no longer needs to be accessed
     
     FILE *textfile; //Defines the pointer textfile as a file
-    textfile = fopen("text", "r"); //Opens the file text and stores it in the variable textfile
-    if(keyfile == NULL) { //Checks that there are no issues with the file
-        printf("Error opening file!\n"); //If there are issues, the user is given a warning message
-    }
-    else {
-        fscanf(textfile, "%[^\n]s", str); //Otherwise, the file is scanned and it's contents stored in the string 'str'
-    }
+    textfile = fopen("textin", "r"); //Opens the file textin and stores it in the variable textfile(File 'text' holds the phrase to be encrypted or decrypted)
+        if(textfile == NULL) { //Checks that there are no issues with the file
+            printf("Error opening file!\n"); //If there are issues, the user is given a warning message
+        }
+        else {
+            fscanf(textfile, "%[^\n]s", str); //Otherwise, the file is scanned and it's contents stored in the string 'str'
+        }
+        
+    FILE *textfile2; //Defines the pointer textfile2 as a file
+    textfile2 = fopen("textout", "a"); //Opens the file textout and stores it in the variable textfile2(Encrypted or decrypted data is written to this file)
 
     /*
      * Following is the user-friendly menu, which asks the user to choose the function the program is to perform. The section contains a 
@@ -83,7 +87,7 @@ int main() {
              */
             case 1: EncryptRotationKey(str, newletter); break;
             case 2: DecryptRotationKey(str, newletter); break;
-            case 3: EncryptSubKey(str, key, newletter, alphabet); break;
+            case 3: EncryptSubKey(str, key, newletter, alphabet, textfile2); break;
             case 4: DecryptSubKey(str, key, newletter, alphabet); break;
             //case 5:
             //case 6:
@@ -304,7 +308,7 @@ int EncryptRotationKey(char str[1024], int newletter) {
  * The function sorts through each value of a given string and compares it to the alphabet. When the alphabet and string values match,
  * the string value is replaced with the key value that corresponds to the alphabet.
  */
-int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]) {
+int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26], FILE *textfile2) {
     /*
      * Variable 'i' is used within the for loop as a counter for the string 'str'
      * Variable 'j' is used as a counter for the alphabet string that is used within the inner for loop
@@ -353,6 +357,8 @@ int EncryptSubKey(char str[1024], char key[26], int newletter, char alphabet[26]
 
     }
     printf("%s\n", str); //Prints the entire encrypted phrase with the specified rotation
+    fprintf(textfile2, "%s\n", str);
+    //fclose(textfile2);
     return 0; //Terminates the program as it has completed its objective
 }
 
